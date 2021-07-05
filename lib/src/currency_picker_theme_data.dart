@@ -17,6 +17,8 @@ class CurrencyPickerThemeData {
   /// If null, the style will be set to [TextStyle(fontSize: 15, color: Theme.of(context).hintColor)]
   final TextStyle? subtitleTextStyle;
 
+  final TextStyle? symbolTextStyle;
+
   ///The flag size.
   ///
   /// If null, set to 25
@@ -28,5 +30,6 @@ class CurrencyPickerThemeData {
     this.titleTextStyle,
     this.subtitleTextStyle,
     this.backgroundColor,
+    this.symbolTextStyle,
   });
 }

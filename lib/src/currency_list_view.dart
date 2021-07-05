@@ -38,7 +38,6 @@ class CurrencyListView extends StatefulWidget {
   /// Defaults true.
   final bool showCurrencyCode;
 
-
   final ScrollController? controller;
 
   final ScrollPhysics? physics;
@@ -204,7 +203,7 @@ class _CurrencyListViewState extends State<CurrencyListView> {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Text(
                   currency.symbol,
-                  style: const TextStyle(fontSize: 18),
+                  style: widget.theme?.symbolTextStyle ?? const TextStyle(fontSize: 18),
                 ),
               ),
             ],
