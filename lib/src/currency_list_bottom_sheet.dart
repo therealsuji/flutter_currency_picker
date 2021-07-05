@@ -15,6 +15,8 @@ void showCurrencyListBottomSheet({
   bool showCurrencyCode = true,
   ScrollPhysics? physics,
   CurrencyPickerThemeData? theme,
+  Color? bottomSheetBackgroundColor,
+  TextField? textField,
 }) {
   final ShapeBorder shape = theme?.shape ??
       const RoundedRectangleBorder(
@@ -25,19 +27,9 @@ void showCurrencyListBottomSheet({
     context: context,
     isScrollControlled: true,
     shape: shape,
-    backgroundColor: theme?.backgroundColor,
-    builder: (_) => _builder(
-      context,
-      onSelect,
-      favorite,
-      currencyFilter,
-      searchHint,
-      physics,
-      showFlag,
-      showCurrencyName,
-      showCurrencyCode,
-      theme,
-    ),
+    backgroundColor: bottomSheetBackgroundColor ?? theme?.backgroundColor,
+    builder: (_) => _builder(context, onSelect, favorite, currencyFilter, searchHint, physics, showFlag,
+        showCurrencyName, showCurrencyCode, theme, textField),
   );
 }
 
@@ -52,6 +44,7 @@ Widget _builder(
   bool showCurrencyName,
   bool showCurrencyCode,
   CurrencyPickerThemeData? theme,
+  TextField? textField,
 ) {
   return DraggableScrollableSheet(
     expand: false,
@@ -70,6 +63,7 @@ Widget _builder(
         controller: controller,
         physics: physics,
         theme: theme,
+        textWidget: textField,
       );
     },
   );

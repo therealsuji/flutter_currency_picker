@@ -47,6 +47,8 @@ class CurrencyListView extends StatefulWidget {
 
   final ScrollPhysics? physics;
 
+  final TextField? textWidget;
+
   /// An optional argument for for customizing the
   /// currency list bottom sheet.
   final CurrencyPickerThemeData? theme;
@@ -63,6 +65,7 @@ class CurrencyListView extends StatefulWidget {
     this.physics,
     this.controller,
     this.theme,
+    this.textWidget,
   }) : super(key: key);
 
   @override
@@ -87,11 +90,9 @@ class _CurrencyListViewState extends State<CurrencyListView> {
     _filteredList = <Currency>[];
 
     if (widget.currencyFilter != null) {
-      final List<String> currencyFilter =
-          widget.currencyFilter!.map((code) => code.toUpperCase()).toList();
+      final List<String> currencyFilter = widget.currencyFilter!.map((code) => code.toUpperCase()).toList();
 
-      _currencyList
-          .removeWhere((element) => !currencyFilter.contains(element.code));
+      _currencyList.removeWhere((element) => !currencyFilter.contains(element.code));
     }
 
     if (widget.favorite != null) {
@@ -99,11 +100,23 @@ class _CurrencyListViewState extends State<CurrencyListView> {
     }
 
     _filteredList.addAll(_currencyList);
+
+    if (widget.textWidget == null) {
+      _searchController!.addListener(() {
+        _filterSearchResults(_searchController!.text);
+      });
+    } else {
+      widget.textWidget!.controller!.addListener(() {
+        _filterSearchResults(widget.textWidget!.controller!.text);
+      });
+    }
+
     super.initState();
   }
 
   @override
   void dispose() {
+    widget.textWidget?.controller?.dispose();
     _searchController?.dispose();
     super.dispose();
   }
@@ -115,37 +128,23 @@ class _CurrencyListViewState extends State<CurrencyListView> {
         const SizedBox(height: 12),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-          child: TextField(
-            controller: _searchController,
-            decoration: InputDecoration(
-              labelText: widget.searchHint ?? "Search",
-              hintText: widget.searchHint ?? "Search",
-              prefixIcon: const Icon(Icons.search),
-              border: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: const Color(0xFF8C98A8).withOpacity(0.2),
-                ),
+          child: widget.textWidget ??
+              TextField(
+                controller: _searchController,
               ),
-            ),
-            onChanged: _filterSearchResults,
-          ),
         ),
         Expanded(
           child: ListView(
             physics: widget.physics,
             children: [
               if (_favoriteList != null) ...[
-                ..._favoriteList!
-                    .map<Widget>((currency) => _listRow(currency))
-                    .toList(),
+                ..._favoriteList!.map<Widget>((currency) => _listRow(currency)).toList(),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.0),
                   child: Divider(thickness: 1),
                 ),
               ],
-              ..._filteredList
-                  .map<Widget>((currency) => _listRow(currency))
-                  .toList()
+              ..._filteredList.map<Widget>((currency) => _listRow(currency)).toList()
             ],
           ),
         ),
@@ -154,10 +153,8 @@ class _CurrencyListViewState extends State<CurrencyListView> {
   }
 
   Widget _listRow(Currency currency) {
-    final TextStyle _titleTextStyle =
-        widget.theme?.titleTextStyle ?? _defaultTitleTextStyle;
-    final TextStyle _subtitleTextStyle =
-        widget.theme?.subtitleTextStyle ?? _defaultSubtitleTextStyle;
+    final TextStyle _titleTextStyle = widget.theme?.titleTextStyle ?? _defaultTitleTextStyle;
+    final TextStyle _subtitleTextStyle = widget.theme?.subtitleTextStyle ?? _defaultSubtitleTextStyle;
 
     return Material(
       // Add Material Widget with transparent color
@@ -199,9 +196,7 @@ class _CurrencyListViewState extends State<CurrencyListView> {
                           if (widget.showCurrencyName) ...[
                             Text(
                               currency.name,
-                              style: widget.showCurrencyCode
-                                  ? _subtitleTextStyle
-                                  : _titleTextStyle,
+                              style: widget.showCurrencyCode ? _subtitleTextStyle : _titleTextStyle,
                             ),
                           ]
                         ],
@@ -232,8 +227,7 @@ class _CurrencyListViewState extends State<CurrencyListView> {
     } else {
       _searchResult = _currencyList
           .where((c) =>
-              c.name.toLowerCase().contains(query.toLowerCase()) ||
-              c.code.toLowerCase().contains(query.toLowerCase()))
+              c.name.toLowerCase().contains(query.toLowerCase()) || c.code.toLowerCase().contains(query.toLowerCase()))
           .toList();
     }
 
@@ -241,6 +235,6 @@ class _CurrencyListViewState extends State<CurrencyListView> {
   }
 
   TextStyle get _defaultTitleTextStyle => const TextStyle(fontSize: 17);
-  TextStyle get _defaultSubtitleTextStyle =>
-      TextStyle(fontSize: 15, color: Theme.of(context).hintColor);
+
+  TextStyle get _defaultSubtitleTextStyle => TextStyle(fontSize: 15, color: Theme.of(context).hintColor);
 }
