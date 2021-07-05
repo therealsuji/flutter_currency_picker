@@ -38,10 +38,6 @@ class CurrencyListView extends StatefulWidget {
   /// Defaults true.
   final bool showCurrencyCode;
 
-  /// Hint of the search TextField (optional).
-  ///
-  /// Defaults Search.
-  final String? searchHint;
 
   final ScrollController? controller;
 
@@ -58,7 +54,6 @@ class CurrencyListView extends StatefulWidget {
     required this.onSelect,
     this.favorite,
     this.currencyFilter,
-    this.searchHint,
     this.showCurrencyCode = true,
     this.showCurrencyName = true,
     this.showFlag = true,

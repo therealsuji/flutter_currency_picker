@@ -9,7 +9,6 @@ void showCurrencyListBottomSheet({
   required ValueChanged<Currency> onSelect,
   List<String>? favorite,
   List<String>? currencyFilter,
-  String? searchHint,
   bool showFlag = true,
   bool showCurrencyName = true,
   bool showCurrencyCode = true,
@@ -28,7 +27,7 @@ void showCurrencyListBottomSheet({
     isScrollControlled: true,
     shape: shape,
     backgroundColor: bottomSheetBackgroundColor ?? theme?.backgroundColor,
-    builder: (_) => _builder(context, onSelect, favorite, currencyFilter, searchHint, physics, showFlag,
+    builder: (_) => _builder(context, onSelect, favorite, currencyFilter, physics, showFlag,
         showCurrencyName, showCurrencyCode, theme, textField),
   );
 }
@@ -38,7 +37,6 @@ Widget _builder(
   ValueChanged<Currency> onSelect,
   List<String>? favorite,
   List<String>? currencyFilter,
-  String? searchHint,
   ScrollPhysics? physics,
   bool showFlag,
   bool showCurrencyName,
@@ -54,7 +52,6 @@ Widget _builder(
     builder: (BuildContext context, ScrollController controller) {
       return CurrencyListView(
         onSelect: onSelect,
-        searchHint: searchHint,
         showFlag: showFlag,
         showCurrencyName: showCurrencyName,
         showCurrencyCode: showCurrencyCode,

@@ -53,7 +53,6 @@ void showCurrencyPicker({
   currency_list.showCurrencyListBottomSheet(
     context: context,
     onSelect: onSelect,
-    searchHint: searchHint,
     showFlag: showFlag,
     showCurrencyName: showCurrencyName,
     showCurrencyCode: showCurrencyCode,
