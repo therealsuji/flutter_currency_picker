@@ -110,7 +110,6 @@ class _CurrencyListViewState extends State<CurrencyListView> {
 
   @override
   void dispose() {
-    widget.textWidget?.controller?.dispose();
     _searchController?.dispose();
     super.dispose();
   }

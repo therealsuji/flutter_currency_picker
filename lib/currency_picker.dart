@@ -47,7 +47,6 @@ void showCurrencyPicker({
   ScrollPhysics? physics,
   CurrencyPickerThemeData? theme,
   TextField? textField,
-  Color? bottomSheetColor,
 }) {
   assert(showCurrencyName || showCurrencyCode, 'showCurrencyName and showCurrencyCode cannot be both false');
   currency_list.showCurrencyListBottomSheet(
@@ -61,7 +60,6 @@ void showCurrencyPicker({
     theme: theme,
     physics: physics,
     textField: textField,
-    bottomSheetBackgroundColor: bottomSheetColor
   );
 }
 

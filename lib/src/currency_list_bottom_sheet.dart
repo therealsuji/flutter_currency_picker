@@ -14,7 +14,6 @@ void showCurrencyListBottomSheet({
   bool showCurrencyCode = true,
   ScrollPhysics? physics,
   CurrencyPickerThemeData? theme,
-  Color? bottomSheetBackgroundColor,
   TextField? textField,
 }) {
   final ShapeBorder shape = theme?.shape ??
@@ -26,9 +25,9 @@ void showCurrencyListBottomSheet({
     context: context,
     isScrollControlled: true,
     shape: shape,
-    backgroundColor: bottomSheetBackgroundColor ?? theme?.backgroundColor,
-    builder: (_) => _builder(context, onSelect, favorite, currencyFilter, physics, showFlag,
-        showCurrencyName, showCurrencyCode, theme, textField),
+    backgroundColor: theme?.backgroundColor ?? Colors.white,
+    builder: (_) => _builder(context, onSelect, favorite, currencyFilter, physics, showFlag, showCurrencyName,
+        showCurrencyCode, theme, textField),
   );
 }
 
